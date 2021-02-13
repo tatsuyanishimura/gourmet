@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja"><head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <!--
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="./css/layout.css">
     -->
-    <style>
+<style>
 html{
     font-size: 62.5%;
-    background-color: gray;
+    background-color: #FF0000;
 }
 
 .level-1{
-    background-color: white;
+    border-radius: 4px;
+    background-color: #FFFFFF;
     font-size: 1.5em;
     max-width: 40em;
     min-width: 20em;
@@ -23,9 +24,27 @@ html{
     padding: 0.5em;
 }
 
+.button{
+    color: black;
+    background-color: #DDDDDD;
+    border: solid 2px #BBBBBB;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #999999;
+    border: solid 2px #777777;
+}
+
+.button:active {
+    background-color: #555555;
+    border: solid #000000;
+}
+
 </style>
-    {% block head %}
-    {% endblock %}
+{% block head %}
+{% endblock %}
 
 </head><body>
     <h1 class="level-1">

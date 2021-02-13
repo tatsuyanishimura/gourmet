@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from getdata import Gourmet
 import math
+import webbrowser
+
 app = Flask(__name__)
 
 case = 0            #ヒット件数
@@ -15,15 +17,15 @@ location = {}       #緯度,経度,範囲を保存
 
 @app.route('/')
 def first():
-    if request.args.get('lat') is None:
-        return render_template('location.html')
+    if 'lat' not in request.args:
+        return render_template('location.html') #GeolocationAPI
     global location, case, page_count, shops
     location = dict(request.args)
-    gou.set(**location)
-    case = gou.cnt_data()
-    page_count = math.ceil(case/limit)
-    shops = gou.shop_data()
-    shops_data = shops_data_maker()
+    gou.set(**location)                 #検索条件の設定
+    case = gou.cnt_data()               #検索件数の取り出し
+    page_count = math.ceil(case/limit)  #ページ数
+    shops = gou.shop_data()             #店舗情報
+    shops_data = shops_data_maker()     #１ページ分のデータ
     page_data = pager()
     return render_template('index.html', range=location['ran'], count=case, shops=shops_data, page=page_data)
 
@@ -89,4 +91,5 @@ def pager():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    webbrowser.open('http://127.0.0.1:5000/')
+    app.run(host='0.0.0.0')
