@@ -37,7 +37,7 @@ function watchFunc(pos){
     var lng = pos.coords.longitude //経度
     var lat = pos.coords.latitude //緯度
         info.innerHTML = '位置情報:' + lat + ',' + lng
-    url = '{{url_for('first')}}' + '?lat=' + lat + '&lng=' + lng + '&range=1'
+    url = '{{url_for('first')}}' + '?lat=' + lat + '&lng=' + lng + '&ran=1'
     link(url)
 }
 

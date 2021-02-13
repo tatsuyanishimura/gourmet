@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request
-from getdata import gourmet
+from getdata import Gourmet
 import math
 app = Flask(__name__)
 
-location = {}
 case = 0            #ヒット件数
 shops = []          #店舗情報
 limit = 5          #ページごとの表示件数
@@ -11,36 +10,32 @@ page = 0            #現在のページ-1
 page_count = 0      #全ページ数
 head = 0            #先頭の件数
 gou = Gourmet()     #グルメAPI
-lat = '0'           #緯度
-lng = '0'           #経度
-ran = '1'           #範囲
+location = {}       #緯度,経度,範囲を保存
 
 
 @app.route('/')
 def first():
     if request.args.get('lat') is None:
         return render_template('location.html')
-    global lat, lng, ran, case, page_count, shops
-    lat = request.args.get('lat')
-    lng = request.args.get('lng')
-    ran = request.args.get('range')
-    gou.set(lat, lng, ran)
+    global location, case, page_count, shops
+    location = dict(request.args)
+    print(location)
+    gou.set(**location)
     case = gou.cnt_data()
     page_count = math.ceil(case/limit)
     shops = gou.shop_data()
     shops_data = shops_data_maker()
     page_data = pager()
-    return render_template('index.html', range=ran, count=case, shops=shops_data, page=page_data)
+    return render_template('index.html', range=location['ran'], count=case, shops=shops_data, page=page_data)
 
 
-@app.route('/index', methods=['POST', 'GET'])
+@app.route('/index', methods=['GET','POST'])
 def index():
     if request.method == 'POST':
-        global lat, lng, ran, case, shops
-        lat = request.form['lat']
-        lng = request.form['lng']
-        ran = request.form['ran']
-        gou.set(lat, lng, ran)
+        global location, case, shops
+        location = dict(request.form)
+        print(location)
+        gou.set(**location)
         case = gou.cnt_data()
         shops = gou.shop_data()
         case = gou.cnt_data()
@@ -57,7 +52,7 @@ def index():
     for i in range(n):
         shop = gou.shop_data()
         shops_data.append(shop[i+head])
-    return render_template('index.html', range=ran, count=case, shops=shops_data, page=page_data)
+    return render_template('index.html', range=location['ran'], count=case, shops=shops_data, page=page_data)
 
 
 @app.route('/shop')
