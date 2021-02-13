@@ -19,7 +19,6 @@ def first():
         return render_template('location.html')
     global location, case, page_count, shops
     location = dict(request.args)
-    print(location)
     gou.set(**location)
     case = gou.cnt_data()
     page_count = math.ceil(case/limit)
@@ -34,7 +33,6 @@ def index():
     if request.method == 'POST':
         global location, case, shops
         location = dict(request.form)
-        print(location)
         gou.set(**location)
         case = gou.cnt_data()
         shops = gou.shop_data()
