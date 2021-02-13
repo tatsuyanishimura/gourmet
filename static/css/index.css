@@ -1,0 +1,22 @@
+.shop-0 {
+    background-color: #FFAA00;
+}
+
+.shop-1 {
+    background-color: #AAFF00;
+}
+
+.shop-image {
+    width: 8em;
+    height: 8em;
+    background-color: #AAAAAA;
+}
+.shop-info {
+    color: #333300;
+    max-width: 36em;
+    min-width: 18em;
+}
+.shop-name {
+    max-width: 36em;
+    min-width: 18em;
+}

@@ -1,0 +1,19 @@
+html{
+        font-size: 62.5%;
+        background-color: gray;
+}
+
+.level-1{
+    padding: 1em;
+    margin: 1em
+    background-color: white;
+    font-size: 0.8em;
+    max-width: 40em;
+    min-width: 18em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.level-2{
+    padding: 1em;
+}

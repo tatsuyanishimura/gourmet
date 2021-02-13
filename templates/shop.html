@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<!--スタイル部分-->
+<style>
+    .shop-image{
+        width: 70%;
+    }
+    .shop-name{
+        font-size: 1.5em;
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+<!--タイトル部分-->
+詳細画面
+{% endblock %}
+
+{% block content %}
+<!--コンテンツ部分-->
+<div class="level-1"><a href="./index">&lt検索画面に戻る</a></div>
+<br>
+<div class="level-1">
+    <div class="level-2"><strong class="shop-name">{{shop.name}}</strong></div>
+    <div class="level-2" style="text-align:center;"><img class="shop-image" src="{{shop.photol}}" alt="画像"></div>
+    <div class="level-2">
+        <strong>値段</strong><br>
+        {{shop.budget}}<br>
+    </div><div class="level-2">
+        <strong>営業時間</strong><br>
+        {{shop.open}}<br>
+    </div>
+    <div class="level-2">
+        <strong>住所</strong><br>
+        {{shop.address}}<br>
+    </div>
+    <div class="level-2">
+        <strong>アクセス</strong><br>
+        {{shop.access}}
+    </div>
+    <div class="level-2">
+        <strong>営業時間</strong><br>
+        {{shop.open}}<br>
+    </div>
+</div>
+<div><br></div>
+{% endblock %}

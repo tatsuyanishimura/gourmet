@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<!--
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+-->
+<style>
+
+.shop-0 {
+    background-color: #FFAA00;
+}
+
+.shop-1 {
+    background-color: #AAFF00;
+}
+
+.shop {
+    letter-spacing: -1em;
+    white-space: nowrap;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    background-color: white;
+}
+
+.paging{
+    text-align: center;
+}
+
+.shop-image {
+    display: inline-block;
+    letter-spacing: normal;
+    white-space: normal;
+    width: 30%;
+    height: auto;
+    background-color: #AAAAAA;
+}
+
+.shop-info {
+    vertical-align: top;
+    display: inline-block;
+    letter-spacing: normal;
+    white-space: normal;
+    width: 70%;
+}
+
+
+</style>
+
+{% endblock %}
+
+
+{% block title %}
+<!--タイトル部分-->
+検索画面
+{% endblock %}
+
+
+{% block content %}
+<!--コンテンツ部分-->
+
+<div class="level-2">
+    <p>付近の飲食店を検索します</p>
+    <div id="info"></div>
+    <form name="search" action="/index" method="post">
+        <input type="hidden" name="lat">
+        <input type="hidden" name="lng">
+        <!--範囲指定-->
+        <label for="range">範囲</label><br>
+        <select name="ran" id="range">
+            <option value="1" {% if range == '1' %}selected{% endif %}>300</option>
+            <option value="2" {% if range == '2' %}selected{% endif %}>500</option>
+            <option value="3" {% if range == '3' %}selected{% endif %}>1000</option>
+            <option value="4" {% if range == '4' %}selected{% endif %}>2000</option>
+            <option value="5" {% if range == '5' %}selected{% endif %}>3000</option>
+        </select>
+        <label for="range">m</label><br>
+        <p>
+            <input type="submit" value="検索">
+        </p>
+    </form>
+</div>
+<div class="level-2">検索結果:{{count}}件</div>
+<div class="level-2 paging">
+    <a href="{{page.prev}}" class="button">前へ</a>
+    {{page.index}}
+    <a href="{{page.next}}" class="button">次へ</a>
+</div>
+
+{% set ns = namespace(cnt=0) %}
+{% if shops == [] %}<div class="level-1">該当する店舗がありません</div>{% endif %}
+{% for shop in shops %}
+{% set i = ns.cnt%2 %}
+<div class="level-2 shop-{{i}}">
+    <div class="shop">
+        <img class="shop-image" src="{{shop.photol}}" alt="旅行の準備中">
+        <div class="shop-info">
+            <strong>{{shop.name}}</strong>
+            <div>場所<br>{{shop.address}}</div>
+            <div>アクセス<br>{{shop.access}}</div>
+            <a href="{{url_for('det_act')}}?number={{ns.cnt}}">＞詳しくはこちら</a>
+        </div>
+    </div>
+</div>
+{% set ns.cnt = ns.cnt + 1 %}
+{% endfor %}
+<div class="level-2 paging">
+    <a href="{{page.prev}}" class="button">前へ</a>
+    {{page.index}}
+    <a href="{{page.next}}" class="button">次へ</a>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/pos.js') }}"></script>
+{% endblock %}

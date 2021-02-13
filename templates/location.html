@@ -1,0 +1,46 @@
+<html>
+<head>
+<style>
+html{
+    font-size: 62.5%;
+    background-color: gray;
+}
+
+.level-1{
+    padding: 1em;
+    background-color: white;
+    font-size: 0.8em;
+    max-width: 40em;
+    min-width: 10em;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+
+</head>
+<body>
+<div class="level-2">位置情報を使用します</div>
+<div class="level-2" id="info"></div>
+<script>
+function link(url){
+    location.href=url;
+}
+const info = document.querySelector('#info')
+if('geolocation' in navigator){
+    info.innerHTML = "確認中"
+}else{
+    info.innerHTML = "位置が取得出来ません"
+}
+var wid = navigator.geolocation.watchPosition(watchFunc)
+
+function watchFunc(pos){
+    var lng = pos.coords.longitude //経度
+    var lat = pos.coords.latitude //緯度
+        info.innerHTML = '位置情報:' + lat + ',' + lng
+    url = '{{url_for('first')}}' + '?lat=' + lat + '&lng=' + lng + '&range=1'
+    link(url)
+}
+
+</script>
+</body>
+</html>
