@@ -10,6 +10,16 @@ html{
     background-color: #FF0000;
 }
 
+#timer{
+    position: fixed;
+    top: 1em;
+    right: 0.5em;
+    background-color: #FFFFFF;
+    border: solid #FF0000;
+    border-radius: 4px;
+    float:right
+}
+
 .level-1{
     border-radius: 4px;
     background-color: #FFFFFF;
@@ -47,14 +57,39 @@ html{
 {% endblock %}
 
 </head><body>
-    <h1 class="level-1">
-        {% block title %}
-        <!--ここにタイトルを表示-->
-        {% endblock %}
-    </h1>
-    <div class="level-1">
-        {% block content %}
-        <!--ここにコンテンツを表示-->
-        {% endblock %}
-    </div>
+<div id="timer">a</div>
+<h1 class="level-1">
+{% block title %}
+<!--ここにタイトルを表示-->
+{% endblock %}
+</h1>
+<div class="level-1">
+{% block content %}
+<!--ここにコンテンツを表示-->
+{% endblock %}
+</div>
+<script type="text/javascript">
+
+
+function renderDay(i) {
+    return ['日', '月', '火', '水', '木', '金', '土'][i];
+}
+clock();
+
+function set2fig(num) {
+   var ret;
+   if( num < 10 ) { ret = "0" + num; }
+   else { ret = num; }
+   return ret;
+}
+
+function clock() {
+    var timer = document.getElementById('timer');
+    var now = new Date();
+    var hour = set2fig(now.getHours())
+    var minute = set2fig(now.getMinutes())
+    timer.innerHTML = '現在<br>'+renderDay(now.getDay()) + '曜日<br>' + hour +　':' + minute;
+}
+setInterval(clock, 1000);
+</script>
 </body></html>
