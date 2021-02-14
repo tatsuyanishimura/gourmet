@@ -29,7 +29,7 @@
         {{shop.budget}}<br>
     </div><div class="level-2">
         <strong>営業時間</strong><br>
-        {{shop.open}}<br>
+        {{ shop.open|safe }}<br>
     </div>
     <div class="level-2">
         <strong>住所</strong><br>
@@ -38,10 +38,6 @@
     <div class="level-2">
         <strong>アクセス</strong><br>
         {{shop.access}}
-    </div>
-    <div class="level-2">
-        <strong>営業時間</strong><br>
-        {{shop.open}}<br>
     </div>
 </div>
 <div><br></div>
