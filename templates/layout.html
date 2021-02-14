@@ -1,63 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja"><head>
 <meta charset="UTF-8">
-    <!--
-    <link rel="stylesheet" type="text/css" href="./css/layout.css">
-    -->
-<style>
-html{
-    font-size: 62.5%;
-    background-color: #FF0000;
-}
+<link rel="stylesheet" type="text/css" href="./static/css/layout.css">
 
-#timer{
-    position: fixed;
-    top: 1em;
-    right: 0.5em;
-    background-color: #FFFFFF;
-    border: solid #FF0000;
-    border-radius: 4px;
-    float:right
-}
-
-.level-1{
-    border-radius: 4px;
-    background-color: #FFFFFF;
-    font-size: 1.5em;
-    max-width: 40em;
-    min-width: 20em;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.level-2{
-    padding: 0.5em;
-}
-
-.button{
-    color: black;
-    background-color: #DDDDDD;
-    border: solid 2px #BBBBBB;
-    border-radius: 4px;
-    text-decoration: none;
-}
-
-.button:hover {
-    background-color: #999999;
-    border: solid 2px #777777;
-}
-
-.button:active {
-    background-color: #555555;
-    border: solid #000000;
-}
-
-</style>
 {% block head %}
+<!--ここstyle等が表示-->
 {% endblock %}
 
 </head><body>
-<div id="timer">a</div>
+<div id="timer"></div>
 <h1 class="level-1">
 {% block title %}
 <!--ここにタイトルを表示-->
@@ -68,28 +19,5 @@ html{
 <!--ここにコンテンツを表示-->
 {% endblock %}
 </div>
-<script type="text/javascript">
-
-
-function renderDay(i) {
-    return ['日', '月', '火', '水', '木', '金', '土'][i];
-}
-clock();
-
-function set2fig(num) {
-   var ret;
-   if( num < 10 ) { ret = "0" + num; }
-   else { ret = num; }
-   return ret;
-}
-
-function clock() {
-    var timer = document.getElementById('timer');
-    var now = new Date();
-    var hour = set2fig(now.getHours())
-    var minute = set2fig(now.getMinutes())
-    timer.innerHTML = '現在<br>'+renderDay(now.getDay()) + '曜日<br>' + hour +　':' + minute;
-}
-setInterval(clock, 1000);
-</script>
+<script type="text/javascript" src="./static/js/timer.js"></script>
 </body></html>

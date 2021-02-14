@@ -1,19 +1,46 @@
 html{
-        font-size: 62.5%;
-        background-color: gray;
+    font-size: 62.5%;
+    background-color: #FF0000;
+}
+
+#timer{
+    position: fixed;
+    top: 1em;
+    right: 0.5em;
+    background-color: #FFFFFF;
+    border: solid #FF0000;
+    border-radius: 4px;
+    float:right
 }
 
 .level-1{
-    padding: 1em;
-    margin: 1em
-    background-color: white;
-    font-size: 0.8em;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    font-size: 1.5em;
     max-width: 40em;
-    min-width: 18em;
+    min-width: 20em;
     margin-left: auto;
     margin-right: auto;
 }
 
 .level-2{
-    padding: 1em;
+    padding: 0.5em;
+}
+
+.button{
+    color: black;
+    background-color: #DDDDDD;
+    border: solid 2px #BBBBBB;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #999999;
+    border: solid 2px #777777;
+}
+
+.button:active {
+    background-color: #555555;
+    border: solid #000000;
 }

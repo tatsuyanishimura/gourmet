@@ -1,54 +1,8 @@
 {% extends "layout.html" %}
 
 {% block head %}
-<!--
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
--->
-<style>
-
-.shop-0 {
-    background-color: #FFAA00;
-}
-
-.shop-1 {
-    background-color: #AAFF00;
-}
-
-.shop {
-    letter-spacing: -1em;
-    white-space: nowrap;
-    display: inline-block;
-    width: 100%;
-    margin: 0;
-    background-color: white;
-}
-
-.paging{
-    text-align: center;
-}
-
-.shop-image {
-    display: inline-block;
-    letter-spacing: normal;
-    white-space: normal;
-    width: 30%;
-    height: auto;
-    background-color: #AAAAAA;
-}
-
-.shop-info {
-    vertical-align: top;
-    display: inline-block;
-    letter-spacing: normal;
-    white-space: normal;
-    width: 70%;
-}
-
-
-</style>
-
+<link rel="stylesheet" type="text/css" href="./static/css/index.css">
 {% endblock %}
-
 
 {% block title %}
 <!--タイトル部分-->
@@ -79,13 +33,14 @@
         </p>
     </form>
 </div>
-<div class="level-2">検索結果:{{count}}件</div>
+
 <div class="level-2 paging">
     <a href="{{page.prev}}" class="button">前へ</a>
     {{page.index}}
     <a href="{{page.next}}" class="button">次へ</a>
 </div>
 
+<div class="level-2">検索結果:{{count}}件</div>
 {% set ns = namespace(cnt=0) %}
 {% if shops == [] %}<div class="level-1">該当する店舗がありません</div>{% endif %}
 {% for shop in shops %}
@@ -103,13 +58,12 @@
 </div>
 {% set ns.cnt = ns.cnt + 1 %}
 {% endfor %}
+
 <div class="level-2 paging">
     <a href="{{page.prev}}" class="button">前へ</a>
     {{page.index}}
     <a href="{{page.next}}" class="button">次へ</a>
 </div>
-<script type="text/javascript" src="{{ url_for('static', filename='js/pos.js') }}"></script>
-<script>
+<script type="text/javascript" src="./static/js/pos.js"></script>
 
-</script>
 {% endblock %}
