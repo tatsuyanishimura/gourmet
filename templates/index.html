@@ -47,13 +47,13 @@
 {% set i = ns.cnt%2 %}
 <div class="level-2 shop-{{i}}">
     <div class="shop">
-        <img class="shop-image" src="{{shop.photol}}" alt="旅行の準備中">
         <div class="shop-info">
             <strong>{{shop.name}}</strong>
             <div>場所<br>{{shop.address}}</div>
             <div>アクセス<br>{{shop.access}}</div>
             <a class="button" href="{{url_for('det_act')}}?number={{ns.cnt}}">詳しくはこちら</a>
         </div>
+        <img class="shop-image" src="{{shop.photol}}" alt="旅行の準備中">
     </div>
 </div>
 {% set ns.cnt = ns.cnt + 1 %}
