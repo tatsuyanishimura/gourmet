@@ -26,28 +26,23 @@ class Gourmet:  #グルメサーチAPI
 
             return 0
 
-    def shop_data(self):
-
+    def shop_data(self):    #店舗情報を渡す
         data = []
-        try:
-            data_names = ['name', 'address', 'access', 'close']
-            for shop_data in self.req_data['results']['shop']:
-                shop_x = {}
-                shop_x['photos'] = shop_data['photo']['pc']['s']
-                shop_x['photol'] = shop_data['photo']['pc']['l']
-                shop_x['budget'] = shop_data['budget']['name']
-                shop_x['open'] = self.open_maker(shop_data['open'])
-                #shop_x['run'] = self.run_maker(shop_data['open'], shop_data['close'])
-                for data_name in data_names:
-                    shop_x[data_name] = shop_data[data_name]
-                print(shop_x)
-                data.append(shop_x)
-        except:
-            print('shop_data error')
-            pass
+        data_names = ['name', 'address', 'access', 'close']
+        for shop_data in self.req_data['results']['shop']:
+            shop_x = {}
+            shop_x['photos'] = shop_data['photo']['pc']['s']
+            shop_x['photol'] = shop_data['photo']['pc']['l']
+            shop_x['budget'] = shop_data['budget']['name']
+            shop_x['open'] = self.open_maker(shop_data['open'])
+            shop_x['run'] = self.run_maker(shop_data['open'], shop_data['close'])
+            for data_name in data_names:
+                shop_x[data_name] = shop_data[data_name]
+            print(shop_x)
+            data.append(shop_x)
         return data
 
-    def open_maker(self,open_data): #営業時間の表示調整関数
+    def open_maker(self,open_data):     #営業時間の表示調整関数
         open_d, o_b = '', ''
         for o_a in open_data:
             if self.open_check(o_a, o_b):
@@ -57,87 +52,105 @@ class Gourmet:  #グルメサーチAPI
         return open_d
 
     def open_check(self, o_a, o_b):
-        if o_b in self.num and o_a in self.days:
+        if o_b in self.num and o_a in self.days or o_a == '（':
             return True
         else:
             return False
 
-    def run_maker(self, open_data, close_data): #営業しているかを判定する関数
+    def run_maker(self, open_data, close_data):     #営業しているかを判定する関数
         da = datetime
-        tr_a, tr_b, tr_c = False, False, False
-        run = '営業中'
-        nrun = '営業時間外'
-        hour, minute = '', ''
+        for c_a in close_data:     #定休日判定
+            if c_a == self.days[da.weekday(da.now().date())]:
+                return '営業時間外'
 
-        for c_a in close_data:     #定休日の判定
-            if self.close_chech(c_a):
-                return nrun
-        if is_holiday(da.now().date() + timedelta(1)):
-            if open_data.find('祝前') is not -1:
-                if run_check(open_data.find('祝前')):
-                    return run
-                else:
-                    return nrun
-        elif is_holiday(da.now().date()):
-            if open_data.find('祝日') is not -1:
-                if run_check(open_data.find('祝日')):
-                    return run
-                else:
-                    return nrun
-        day = da.weekday(da.now().date())
-        run_d, o_b, o_c = '', '', ''
-        for o_a in open_data:       #営業時間の判定
-            if not tr_a:
-                tr_a = self.run_check_one(o_a, o_b, o_c)
-            elif not tr_b:
-                if o_a in self.num:
-                    hour = hour + o_a
-                elif o_a is ':':
-                    tr_b = True
-            elif o_a in self.num:
-                minute = minute + o_a
+        if is_holiday(da.now().date()):     #祝日判定
+            a = open_data.find('祝日')
+            if a != -1:
+                return self.run_nrun(self.holy_check(open_data, a))
 
+        if is_holiday(da.now().date() + timedelta(1)):     #祝前日判定
+            a = open_data.find('祝前')
+            if a != -1:
+                return  self.run_nrun(self.holy_check(open_data, a))
 
-                run_d = run_d
-            o_c = o_b
-            o_b = o_a
+        return self.run_nrun(self.day_check(open_data))     #曜日判定
 
-        return run_d
-
-    def close_check(self,c_a):
-        da = datetime
-        if c_a is self.days[da.weekday(da.now())]:
-            return True
+    def holy_check(self, open_data,para):
         return False
 
-    def run_time(self, open_data):
+    def day_check(self, open_data):
+        da = datetime
+        day = da.weekday(da.now().date())
+        if self.days[day] == '日':   #日曜だけの特殊処理
+            a = self.sunday(open_data)
+        else:   #その他
+            a = open_data.find(self.days[day])
+        if a != -1:
+            if self.run_check(open_data, a):
+                return True
         run_d, o_b, o_c = '', '', ''
         for o_a in open_data:
-            if o_a in self.days2 or o_a:
-                pass
-
-        if o_a in self.days:
-            return True
-        elif o_a in self.days and o_b is '~' and o_c in self.days:
-            a = self.days2[o_a]
-            c = self.days2[o_c]
-            d = 0
-            if a > c:
-                c = c + 7
-                d = d + 7
-            if a < da.weekday(da.now().date()) < c:
+            if o_a in self.days:
                 return True
-        elif o_b is '祝':
-            today = da.now().date()
-            if o_a is '前':
-                t = 1
-            return jpholiday.is_holiday(today+timedelta(days=t))
+            elif o_a in self.days and o_b == '～' and o_c in self.days:
+                a = self.days2[o_a]
+                c = self.days2[o_c]
+                if a > c:
+                    c = c + 7
+                    d = d + 7
+                if a < da.weekday(day) < c:
+                    a = open_data.find(o_c)
+                    if self.run_check(open_data, a):
+                        return True
+            o_b = o_a
+            o_c = o_b
+
+    def sunday(self, open_data):
+        a = 0
+        if open_data.find('日') == open_data.find('祝日')+1:
+            a = open_data.find('日') + 1
+        if open_data.find('日', a) == open_data.find('前日')+1:
+            a = open_data.find('日', a) + 1
+        return open_data.find('日', a)
+
+    def run_check(self,open_data,a):    #営業時間か判定する関数
+        da = datetime
+        open_d = open_data[a:]
+        hour_a, hour_b, minu_a, minu_b = '', '', '', ''
+        i, tra, trb = 0, 0, 0
+        for o_d in open_d:
+            if o_d == ':':
+                tra = 1
+            if o_d == '翌' and i == 4:
+                trb = 1
+            if o_d in self.num:
+                if tra == 1:
+                    i = i + 1
+                if i < 1:
+                    hour_a = hour_a + o_d
+                elif i < 4:
+                    minu_a = minu_a + o_d
+                elif i < 6:
+                    hour_b = hour_b + o_d
+                elif i < 8:
+                    minu_b = minu_b + o_d
+                else:
+                    break
+                i = i + 1
+            tra = 0
+        hb = int(hour_b) + 24*trb
+        if int(hour_a) < da.now().hour < hb:
+            return True
+        elif hour_a == da.now().hour:
+            if int(minu_a) < da.now().minute:
+                return True
+        elif hour_b == da.now().hour:
+            if da.now().minute < int(minu_b) :
+                return True
         return False
 
-
-
-
-
-
-if __name__ == '__main__':
-    pass
+    def run_nrun(self,check):
+        if check:
+            return '営業中'
+        else:
+            return '営業時間外'
