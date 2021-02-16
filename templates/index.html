@@ -48,12 +48,14 @@
 <div class="level-2 shop-{{i}}">
     <div class="shop">
         <div class="shop-info">
-            <strong>{{shop.name}}({{shop.run}})</strong>
+            <strong>{{shop.name}}{{shop.run}}</strong>
+            <div>ジャンル<br>{{shop.genre}}</div>
             <div>場所<br>{{shop.address}}</div>
-            <div>アクセス<br>{{shop.access}}</div>
+            <div>アクセス<br>{{shop.mobile_access}}</div>
+            <div>キャッチ<br>{{shop.catch}}</div>
             <a class="button" href="{{url_for('det_act')}}?number={{ns.cnt}}">詳しくはこちら</a>
         </div>
-        <img class="shop-image" src="{{shop.photol}}" alt="画像">
+        <img class="shop-image" src="{{shop.photo}}" alt="画像">
     </div>
 </div>
 {% set ns.cnt = ns.cnt + 1 %}

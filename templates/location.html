@@ -1,21 +1,5 @@
 <html>
 <head>
-<style>
-html{
-    font-size: 62.5%;
-    background-color: gray;
-}
-
-.level-1{
-    padding: 1em;
-    background-color: white;
-    font-size: 0.8em;
-    max-width: 40em;
-    min-width: 10em;
-    margin-left: auto;
-    margin-right: auto;
-}
-</style>
 
 </head>
 <body>
@@ -37,7 +21,7 @@ function watchFunc(pos){
     var lng = pos.coords.longitude //経度
     var lat = pos.coords.latitude //緯度
         info.innerHTML = '位置情報:' + lat + ',' + lng
-    url = '{{url_for('first')}}' + '?lat=' + lat + '&lng=' + lng + '&ran=1'
+    url = '{{url_for('first')}}' + '?lat=' + lat + '&lng=' + lng + '&ran=5'
     link(url)
 }
 

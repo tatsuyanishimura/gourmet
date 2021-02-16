@@ -23,8 +23,18 @@
 <br>
 <div class="level-1">
     <div class="level-2"><strong class="shop-name">{{shop.name}}</strong></div>
-    <div class="level-2" style="text-align:center;"><img class="shop-image" src="{{shop.photol}}" alt="画像"></div>
+    <div class="level-2" style="text-align:center;"><img class="shop-image" src="{{shop.photo}}" alt="画像"></div>
+
     <div class="level-2">
+        <strong>ジャンル</strong><br>
+        {{ shop.genre }}<br>
+    </div><div class="level-2">
+        <strong>住所</strong><br>
+        {{shop.address}}<br>
+    </div><div class="level-2">
+        <strong>アクセス</strong><br>
+        {{shop.access}}
+    </div><div class="level-2">
         <strong>値段</strong><br>
         {{shop.budget}}<br>
     </div><div class="level-2">
@@ -33,14 +43,12 @@
     </div><div class="level-2">
         <strong>定休日</strong><br>
         {{ shop.close }}<br>
-    </div>
-    <div class="level-2">
-        <strong>住所</strong><br>
-        {{shop.address}}<br>
-    </div>
-    <div class="level-2">
-        <strong>アクセス</strong><br>
-        {{shop.access}}
+    </div><div class="level-2">
+        <strong>サイト</strong><br>
+    <a href="{{shop.urls}}">{{shop.urls}}</a>
+    </div><div class="level-2">
+        <strong>地図</strong><br>
+        <a href="{{shop.coupon_urls}}">{{shop.coupon_urls}}</a>
     </div>
 </div>
 <div><br></div>
