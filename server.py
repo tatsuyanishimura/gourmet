@@ -14,7 +14,7 @@ head = 0            #先頭の件数
 gou = Gourmet()     #グルメAPI
 loc = {}       #緯度,経度,範囲を保存
 
-
+#初期動作
 @app.route('/')
 def first():
     if 'lat' not in request.args:
@@ -29,8 +29,8 @@ def first():
     page_data = pager()
     return render_template('index.html', range=loc['ran'], count=case, shops=shops_data, page=page_data)
 
-
-@app.route('/index', methods=['GET','POST'])
+#検索画面
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         global loc, case, shops
@@ -55,7 +55,7 @@ def index():
         shops_data.append(shop[i+head])
     return render_template('index.html', range=loc['ran'], count=case, shops=shops_data, page=page_data)
 
-
+#詳細画面
 @app.route('/shop')
 def det_act():
     i = int(request.args.get('number'))
@@ -63,7 +63,7 @@ def det_act():
     return render_template('shop.html', shop=shop)
 
 
-def shops_data_maker():
+def shops_data_maker(): #店舗情報をページング対応させる
     shops_data = []
     if limit < case-head:
         n = limit
@@ -75,7 +75,7 @@ def shops_data_maker():
     return shops_data
 
 
-def pager():
+def pager():    #ページリンクの表示とリンク先を作る関数
     data = {}
     page_count = math.ceil(case/limit)
     data['prev'] = './index?page=' + str(page-1)
@@ -92,5 +92,5 @@ def pager():
 
 
 if __name__ == '__main__':
-    webbrowser.open('http://127.0.0.1:5000/')
-    app.run(host='0.0.0.0')
+    webbrowser.open('http://127.0.0.1:8000/')
+    app.run(host='0.0.0.0', port=8000)
