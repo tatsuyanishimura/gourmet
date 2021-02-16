@@ -2,7 +2,9 @@ import requests
 from jpholiday import is_holiday
 from datetime import datetime,timedelta
 
+
 class Gourmet:  #グルメサーチAPI
+
     def __init__(self):
         self.lat = ''
         self.lng = ''
@@ -12,6 +14,7 @@ class Gourmet:  #グルメサーチAPI
         self.req_data = {}
         self.date = ''
         self.day = ''
+
     def set(self, lat: str, lng: str, ran: str):
         self.set_pos(lat, lng)
         self.set_ran(ran)
@@ -46,7 +49,7 @@ class Gourmet:  #グルメサーチAPI
         print(self.date)
         self.day = datetime.weekday(self.date)
         data = []
-        data_names = ['name', 'address', 'mobile_access', 'access', 'close', 'catch']
+        data_names = ['name', 'address', 'mobile_access', 'access', 'close', 'catch', 'free_drink', 'free_food', 'card']
         for shop_data in self.req_data['results']['shop']:
             shop_x = {}
             shop_x['photo'] = shop_data['photo']['pc']['l']
@@ -80,12 +83,6 @@ class Gourmet:  #グルメサーチAPI
             return True
         else:
             return False
-
-    def run_maker2(self, close_data: str):     #営業しているかを判定する関数
-        for c_a in close_data:     #定休日判定
-            if c_a == self.days[datetime.weekday(self.date)]:
-                return '(定休日)'
-        return ''
 
     def run_maker(self, open_data: str, close_data: str):     #営業しているなら真、営業していないなら偽を返す関数
         for c_a in close_data:     #定休日判定
@@ -169,7 +166,7 @@ class Gourmet:  #グルメサーチAPI
         else:
             return '(営業時間外)'
 
-    def del_bra(self,text: str):  # 括弧を消去
+    def del_bra(self,text: str):  # textの括弧を消去して返す
         i = 0
         st = text
         while '（' in st:

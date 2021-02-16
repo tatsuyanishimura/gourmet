@@ -35,14 +35,23 @@
         <strong>アクセス</strong><br>
         {{shop.access}}
     </div><div class="level-2">
-        <strong>値段</strong><br>
-        {{shop.budget}}<br>
-    </div><div class="level-2">
         <strong>営業時間</strong><br>
         {{ shop.open|safe }}<br>
     </div><div class="level-2">
         <strong>定休日</strong><br>
         {{ shop.close }}<br>
+    </div><div class="level-2">
+        <strong>値段</strong><br>
+        {{shop.budget}}<br>
+    </div><div class="level-2">
+        <strong>カード利用</strong><br>
+        {{shop.card}}<br>
+    </div><div class="level-2">
+        <strong>飲み放題</strong><br>
+        {{ shop.free_drink }}<br>
+    </div><div class="level-2">
+        <strong>食べ放題</strong><br>
+        {{ shop.free_food }}<br>
     </div><div class="level-2">
         <strong>サイト</strong><br>
     <a href="{{shop.urls}}">{{shop.urls}}</a>

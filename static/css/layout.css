@@ -19,12 +19,14 @@ html{
     background-color: #FFFFFF;
     font-size: 1.5em;
     max-width: 60em;
-    min-width: 20em;
+    min-width: 30em;
     margin-left: auto;
     margin-right: auto;
 }
 
 .level-2{
+    max-width: 60em;
+    min-width: 30em;
     padding: 0.5em;
 }
 
