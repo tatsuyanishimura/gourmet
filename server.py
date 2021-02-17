@@ -32,16 +32,17 @@ def first():
 #検索画面
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    global loc, case, shops, page, head
     if request.method == 'POST':
-        global loc, case, shops
         loc = dict(request.form)
         gou.set_ran(loc['ran'])
         gou.set_data()
         case = gou.cnt_data()
         shops = gou.shop_data()
         case = gou.cnt_data()
+        page = 0
+        head = page * limit
     if request.args.get('page'):
-        global page, head
         page = int(request.args.get('page'))
         head = page * limit
     page_data = pager()
@@ -92,4 +93,5 @@ def pager():    #ページリンクの表示とリンク先を作る関数
 
 
 if __name__ == '__main__':
+    webbrowser.open('http://localhost:8000/')
     app.run(host='0.0.0.0', port=8000)
