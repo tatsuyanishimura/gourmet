@@ -193,4 +193,3 @@ class Gourmet:  # グルメサーチAPI
             if len(st) < a + 1:
                 break
         return datas
-
