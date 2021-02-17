@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, Markup
 from getdata import Gourmet
 import math
-import webbrowser
 
 app = Flask(__name__)
 
@@ -93,5 +92,4 @@ def pager():    #ページリンクの表示とリンク先を作る関数
 
 
 if __name__ == '__main__':
-    webbrowser.open('http://localhost:8000/')
     app.run(host='0.0.0.0', port=8000)
